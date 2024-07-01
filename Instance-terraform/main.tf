@@ -9,7 +9,7 @@ resource "aws_security_group" "Jenkins-sg" {
       from_port        = port
       to_port          = port
       protocol         = "tcp"
-      cidr_blocks      = ["0.0.0.0/0"]
+      cidr_blocks      = ["14.194.162.86/32"]
       ipv6_cidr_blocks = []
       prefix_list_ids  = []
       security_groups  = []
@@ -31,23 +31,23 @@ resource "aws_security_group" "Jenkins-sg" {
 
 
 resource "aws_instance" "web" {
-  ami                    = "ami-0c7217cdde317cfec"  #change your ami value according to your aws instance
-  instance_type          = "t2.large"
-  key_name               = "my key"
+  ami                    = "ami-01f18bad382a13aa0"  #change your ami value according to your aws instance
+  instance_type          = "t3.medium"
+  key_name               = "abhi"
   vpc_security_group_ids = [aws_security_group.Jenkins-sg.id]
   user_data              = templatefile("./script.sh", {})
 
   tags = {
-    Name = "gpt clone"
+    Name = "Bot-Application"
   }
   root_block_device {
     volume_size = 30
   }
 }
-resource "aws_instance" "web2" {
-  ami                    = "ami-0c7217cdde317cfec" #change your ami value according to your aws instance 
-  instance_type          = "t2.medium"
-  key_name               = "my key"
+resource "aws_instance" "Bot-App-2" {
+  ami                    = "ami-01f18bad382a13aa0" #change your ami value according to your aws instance 
+  instance_type          = "t3.medium"
+  key_name               = "abhi"
   vpc_security_group_ids = [aws_security_group.Jenkins-sg.id]
   tags = {
     Name = "Monitering via grafana"
